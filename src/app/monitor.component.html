@@ -1,0 +1,29 @@
+<aside class="monitor-column" aria-label="Live signal monitor">
+  <div class="monitor-topline"><span class="eyebrow">BEHIND THE INTERACTION</span><span class="desktop-label"><app-icon name="window" /> DESKTOP DEMO</span></div>
+  <section class="monitor surface">
+    <div class="monitor-heading"><div class="monitor-title"><span class="monitor-icon"><app-icon name="pulse" /></span><h2>Live signals</h2></div><span class="live-badge" [class.is-paused]="tracker.paused()"><span class="mini-dot"></span>{{ tracker.paused() ? 'Paused' : 'Listening' }}</span></div>
+    <p class="monitor-description">Your interactions, in real time.</p>
+    <div class="session-stats"><div><span class="stat-label">SESSION STATUS</span><strong class="session-status"><span class="status-dot" [class.away]="tracker.status() !== 'Active'"></span>{{ tracker.status() }}</strong></div><div><span class="stat-label">SIGNALS CAUGHT</span><strong class="signal-number">{{ tracker.signalCount().toString().padStart(2, '0') }}<span>in this log</span></strong></div></div>
+    <div class="feed-heading"><span>ACTIVITY FEED <span class="event-count">{{ tracker.events().length }}</span></span><div class="feed-actions"><button class="icon-button" aria-label="Export events" title="Export events as JSON" (click)="tracker.exportEvents()" [disabled]="!tracker.events().length"><app-icon name="download" /></button><button class="icon-button" aria-label="Reset events" title="Reset event history" (click)="tracker.resetEvents()" [disabled]="!tracker.events().length"><app-icon name="reset" /></button></div></div>
+    <div class="event-feed" tabindex="0" aria-label="Recent events">
+      @for (event of tracker.events(); track event.id) {
+        <div class="event" [class.signal-event]="event.isSignal">
+          <span class="event-icon"><app-icon [name]="eventIcon(event.kind)" /></span>
+          <div class="event-content"><div class="event-title-row"><strong>{{ event.title }}</strong><time [attr.datetime]="event.timestamp">{{ event.timestamp | date:'HH:mm:ss' }}</time></div><p>{{ event.detail }}</p><div class="event-tags"><span>{{ event.page }}</span>@if (event.source === 'simulated') { <span class="simulated-tag">Simulated</span> }</div></div>
+        </div>
+      } @empty {
+        <div class="empty-feed"><app-icon name="pulse" /><strong>A fresh start.</strong><p>Interact with the page to see your next signal.</p></div>
+      }
+    </div>
+    <div class="monitor-controls"><span><span class="mini-dot" [class.muted-dot]="tracker.paused()"></span>{{ tracker.paused() ? 'Collection paused' : 'Waiting for your next move' }}</span><button class="text-button" [attr.aria-label]="tracker.paused() ? 'Resume tracking' : 'Pause tracking'" (click)="tracker.toggleTracking()"><app-icon [name]="tracker.paused() ? 'play' : 'pause'" />{{ tracker.paused() ? 'Resume' : 'Pause' }}</button></div>
+    <span class="sr-only" aria-live="polite">{{ tracker.latestSignal()?.title }}</span>
+  </section>
+  <section class="demo-lab">
+    <div class="lab-heading"><span class="soft-icon small"><app-icon name="cursor" /></span><h3>Try it for yourself</h3><span class="lab-tag">DEMO</span></div>
+    <p>Move your cursor off the top of the page, switch tabs, or stay still for a moment.</p>
+    <div class="idle-setting"><label for="idle-threshold">Idle threshold</label><select id="idle-threshold" [value]="tracker.idleSeconds()" (change)="setIdle($event)"><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="60">60 seconds</option></select></div>
+    <div class="simulate-divider"><span>OR SIMULATE A SIGNAL</span></div>
+    <div class="simulation-buttons"><button class="secondary-button" aria-label="Simulate exit intent" [disabled]="tracker.paused()" (click)="tracker.detectExit('simulated')"><app-icon name="diagonal" />Exit intent</button><button class="secondary-button" aria-label="Simulate idle" [disabled]="tracker.paused()" (click)="tracker.simulateIdle()"><app-icon name="clock" />Inactivity</button></div>
+  </section>
+  <p class="monitor-footnote"><app-icon name="shield" />Only interaction metadata. Never your message.</p>
+</aside>
