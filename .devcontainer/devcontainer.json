@@ -1,0 +1,16 @@
+{
+  "name": "Signal Angular demo",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "remoteUser": "node",
+  "postCreateCommand": "npm ci --no-audit --no-fund",
+  "postStartCommand": "bash .devcontainer/start-demo.sh",
+  "waitFor": "postStartCommand",
+  "forwardPorts": [4200],
+  "portsAttributes": {
+    "4200": {
+      "label": "Signal demo — open in browser",
+      "protocol": "http",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}

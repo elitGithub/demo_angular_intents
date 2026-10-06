@@ -2,6 +2,22 @@
 
 A small, self-contained Angular app with **Contact** and **About** pages, a validated demo form, and a live browser-event monitor.
 
+## Open in GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/elitGithub/demo_angular_intents?quickstart=1)
+
+Click the button, sign in to GitHub, and choose **Create codespace** (or resume your existing one). The repository must be accessible to your account. The configuration selects Node 24, installs dependencies, and starts the app automatically on port **4200**, including when a codespace restarts. No terminal commands are needed for normal use.
+
+The preview is configured to open in a separate browser tab. If the browser blocks it, use **Ports → 4200 → Open in Browser**. A separate tab gives the desktop exit-intent demo the full browser viewport.
+
+To enable this after pulling changes into an existing codespace, run **Codespaces: Rebuild Container** from the command palette. Startup logs are in `/tmp/signal-demo.log`; to retry startup manually, run `bash .devcontainer/start-demo.sh`.
+
+### Share only the running demo
+
+If someone only needs to try the app, open your own codespace, then go to **Ports**, right-click **4200**, select **Port Visibility → Public**, and copy the forwarded URL. Visitors can open that URL without a GitHub account. This makes the development preview publicly accessible, and it is available only while your codespace and its server remain running. Your account or organization policy may restrict public ports. Stop the codespace when the demo is over.
+
+People who create their own codespaces need a GitHub account and available Codespaces usage. A private repository also requires repository access. See [GitHub's quick-launch links](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces) and [sharing forwarded ports](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace#sharing-a-port).
+
 ## Run
 
 Use Node.js 24.15+ (24.x), Node 22.22.3+ (22.x), or Node 26.x.
